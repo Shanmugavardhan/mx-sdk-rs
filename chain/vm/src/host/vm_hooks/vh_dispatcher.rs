@@ -882,6 +882,21 @@ impl<C: VMHooksContext> VMHooks for VMHooksDispatcher<C> {
         Ok(RESULT_OK)
     }
 
+    fn managed_drwa_native_governance_query(
+        &mut self,
+        query_type: i32,
+        key_handle: i32,
+        dest_handle: i32,
+    ) -> Result<i32, VMHooksEarlyExit> {
+        let _ = query_type;
+        let _ = key_handle;
+        let _ = dest_handle;
+
+        // Native governance state is not modeled in the Rust-side VM host.
+        // Return RESULT_ERROR to signify state not found/unavailable.
+        Ok(RESULT_ERROR)
+    }
+
     fn managed_async_call(
         &mut self,
         dest_handle: i32,

@@ -1,11 +1,12 @@
 use multiversx_sc_scenario::*;
 
 fn world() -> ScenarioWorld {
-    ScenarioWorld::new()
+    let mut world = ScenarioWorld::vm_go();
+    world.set_current_dir_from_workspace("contracts/mrv/carbon-credit");
+    world
 }
 
 #[test]
-#[ignore = "requires Go VM"]
 fn carbon_credit_init_go() {
     world().run("scenarios/carbon-credit-init.scen.json");
 }

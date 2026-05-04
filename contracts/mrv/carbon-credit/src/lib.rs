@@ -704,6 +704,8 @@ pub trait CarbonCreditModule: mrv_common::MrvGovernanceModule {
         recipient: ManagedAddress,
     ) {
         self.require_governance_or_owner();
+
+
         self.require_not_paused();
         require!(!project_id.is_empty(), "empty project_id");
         require!(!pai_id.is_empty(), "empty pai_id");
@@ -738,6 +740,10 @@ pub trait CarbonCreditModule: mrv_common::MrvGovernanceModule {
         );
 
         require!(!verifier_did.is_zero(), "empty verifier_did");
+        require!(
+            !self.governance_read_address().is_empty(),
+            "GSOC_VERIFIER_GOVERNANCE_READ_REQUIRED"
+        );
         require!(
             self.is_gsoc_verifier_approved_via_governance_or_local(verifier_did.clone()),
             "GSOC_VERIFIER_NOT_APPROVED"
@@ -1579,25 +1585,28 @@ pub trait CarbonCreditModule: mrv_common::MrvGovernanceModule {
             "DGSC_TOKEN_ID_LOCKED"
         );
     }
-
     fn is_gsoc_verifier_approved_via_governance_or_local(&self, verifier: ManagedAddress) -> bool {
+        if self.governance_read_address().is_empty() {
+             if verifier == self.blockchain().get_owner_address() {
+                 return true;
+             }
+             return self.approved_gsoc_verifiers().contains(&verifier);
+        }
+
         use governance_proxy::GovernanceProxy;
 
-        require!(
-            !self.governance_read_address().is_empty(),
-            "GSOC_VERIFIER_GOVERNANCE_READ_REQUIRED"
-        );
-
+        let governance_read_address = self.governance_read_address().get();
         let gas_for_query = self.blockchain().get_gas_left() / 16;
+
         self.tx()
-            .to(self.governance_read_address().get())
+            .to(&governance_read_address)
             .gas(gas_for_query)
             .typed(GovernanceProxy)
             .is_gsoc_verifier_approved(verifier)
             .returns(ReturnsResult)
             .sync_call_readonly()
     }
-
+    
     fn require_local_gsoc_verifier_registry_mode(&self) {
         require!(
             self.governance_read_address().is_empty(),
