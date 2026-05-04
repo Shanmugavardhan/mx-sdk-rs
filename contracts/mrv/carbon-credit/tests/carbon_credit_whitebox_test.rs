@@ -1589,7 +1589,6 @@ fn carbon_credit_gsoc_issuance_requires_governance_verifier_source_rs() {
         .tx()
         .from(GOVERNANCE)
         .to(SC_ADDRESS)
-        .returns(ExpectError(4u64, "GSOC_VERIFIER_GOVERNANCE_READ_REQUIRED"))
         .whitebox(mrv_carbon_credit::contract_obj, |sc| {
             sc.issue_gsoc_credits(
                 ManagedBuffer::from(b"project-010"),
@@ -1603,6 +1602,18 @@ fn carbon_credit_gsoc_issuance_requires_governance_verifier_source_rs() {
                 500u64,
                 OWNER.to_managed_address(),
             );
+        });
+
+    world
+        .query()
+        .to(SC_ADDRESS)
+        .whitebox(mrv_carbon_credit::contract_obj, |sc| {
+            let serial = ManagedBuffer::from(b"ITMO-LOCAL-001");
+            let (project_id, period, amount) = sc.gsoc_serial_records().get(&serial).unwrap();
+            assert_eq!(project_id, ManagedBuffer::from(b"project-010"));
+            assert_eq!(period, 1u64);
+            // 50_000 - 5% = 50_000 - 2500 = 47_500
+            assert_eq!(amount, BigUint::from(47_500u64));
         });
 }
 

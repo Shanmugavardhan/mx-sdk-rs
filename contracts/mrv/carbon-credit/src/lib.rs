@@ -741,10 +741,6 @@ pub trait CarbonCreditModule: mrv_common::MrvGovernanceModule {
 
         require!(!verifier_did.is_zero(), "empty verifier_did");
         require!(
-            !self.governance_read_address().is_empty(),
-            "GSOC_VERIFIER_GOVERNANCE_READ_REQUIRED"
-        );
-        require!(
             self.is_gsoc_verifier_approved_via_governance_or_local(verifier_did.clone()),
             "GSOC_VERIFIER_NOT_APPROVED"
         );
