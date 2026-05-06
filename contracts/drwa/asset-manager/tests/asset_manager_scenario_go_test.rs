@@ -1,9 +1,7 @@
 use multiversx_sc_scenario::imports::*;
 
 fn world() -> ScenarioWorld {
-    let mut world = ScenarioWorld::vm_go();
-    world.set_current_dir_from_workspace("contracts/drwa/asset-manager");
-    world
+    ScenarioWorld::vm_go()
 }
 
 #[test]
