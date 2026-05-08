@@ -1,22 +1,22 @@
 {
     "esdtAttribute": {
         "ticker": "OnlyInEsdt",
-        "type": "OnlyShowsUpInEsdtAttr"
+        "type": "EsdtAttribute"
     },
     "types": {
-        "OnlyShowsUpAsNested10": {
-            "type": "struct",
-            "docs": [
-                "Tests that the ABI generator also fetches types that only appear as fields."
-            ]
-        },
-        "OnlyShowsUpInEsdtAttr": {
+        "EsdtAttribute": {
             "type": "struct",
             "fields": [
                 {
                     "name": "field",
-                    "type": "OnlyShowsUpAsNested10"
+                    "type": "NestedEsdtAttribute"
                 }
+            ]
+        },
+        "NestedEsdtAttribute": {
+            "type": "struct",
+            "docs": [
+                "Tests that the ABI generator also fetches types that only appear as fields."
             ]
         }
     }

@@ -1,7 +1,9 @@
 use multiversx_sc_scenario::imports::*;
 
 fn world() -> ScenarioWorld {
-    ScenarioWorld::vm_go()
+    let mut blockchain = ScenarioWorld::vm_go();
+    blockchain.set_current_dir_from_workspace("contracts/feature-tests/abi-tester");
+    blockchain
 }
 
 #[test]

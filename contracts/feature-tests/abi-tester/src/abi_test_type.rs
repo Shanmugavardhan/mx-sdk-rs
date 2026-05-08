@@ -15,14 +15,14 @@ multiversx_sc::derive_imports!();
 #[derive(NestedEncode, NestedDecode, TopEncode, TopDecode)]
 pub struct AbiTestType {
     /// This type should only appear here.
-    pub nested: OnlyShowsUpAsNested01,
+    pub nested: NestedUnit,
 
     /// Tests that recursive types will not send the ABI generator into an infinite loop.
     pub next: Option<Box<AbiTestType>>,
 
     /// Tests that tuples tell the ABI of their component types even if they appear nowhere else.
     /// Also, just like above, recursive types need to work even when nested into a tuple.
-    pub tuple_madness: (OnlyShowsUpAsNested02, Option<Box<AbiTestType>>),
+    pub tuple_madness: (NestedEmptyArray, Option<Box<AbiTestType>>),
 }
 
 /// Its only purpose is to test that the ABI generator works fine.
@@ -72,9 +72,9 @@ pub struct AbiEnvelope<M: ManagedTypeApi> {
 
 #[type_abi]
 #[derive(TopEncode, TopDecode)]
-pub struct OnlyShowsUpInEsdtAttr {
+pub struct EsdtAttribute {
     #[allow(dead_code)]
-    pub field: OnlyShowsUpAsNested10,
+    pub field: NestedEsdtAttribute,
 }
 
 #[type_abi]
