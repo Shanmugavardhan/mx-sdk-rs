@@ -3,7 +3,7 @@
 # copies wasm & scenarios files to the Arwen test folder
 # expects 1 argument: the path to the Arwen repo root
 
-VM_REPO_PATH=${1:?"Missing VM repo path!"}
+VM_REPO_PATH="../mx-chain-vm-go"
 TARGET_DIR=$PWD/target
 
 build_and_copy() {
@@ -16,9 +16,11 @@ build_and_copy() {
    mkdir -p $vm_contract_path/output
    cp $contract_path/output/*.mxsc.json \
       $vm_contract_path/output
-   rm $vm_contract_path/output/*.wasm
+   cp $contract_path/output/*.wasm \
+      $vm_contract_path/output
    rm $vm_contract_path/output/*-dbg.mxsc.json
 }
+
 
 build_and_copy_with_scenarios() {
    contract_path=$1
@@ -27,10 +29,10 @@ build_and_copy_with_scenarios() {
 
    sc-meta all build --target-dir $TARGET_DIR --path $contract_path || return 1
    mkdir -p $vm_contract_path/output
-   rm -rf $vm_contract_path/scenarios
+   #rm -rf $vm_contract_path/scenarios
    cp $contract_path/output/*.mxsc.json \
       $vm_contract_path/output
-   rm $vm_contract_path/output/*.wasm
+   # rm $vm_contract_path/output/*.wasm
    rm $vm_contract_path/output/*-dbg.mxsc.json
 
    # copying scenarios ...
@@ -46,7 +48,7 @@ build_and_copy_with_scenarios() {
 
 build_and_copy_with_scenarios ./contracts/core/wegld-swap $VM_REPO_PATH/test/wegld-swap
 build_and_copy_with_scenarios ./contracts/examples/adder $VM_REPO_PATH/test/adder
-build_and_copy_with_scenarios ./contracts/examples/crowdfunding-esdt $VM_REPO_PATH/test/crowdfunding-esdt
+build_and_copy_with_scenarios ./contracts/examples/crowdfunding $VM_REPO_PATH/test/crowdfunding
 build_and_copy_with_scenarios ./contracts/examples/digital-cash $VM_REPO_PATH/test/digital-cash
 build_and_copy_with_scenarios ./contracts/examples/factorial $VM_REPO_PATH/test/factorial
 build_and_copy_with_scenarios ./contracts/examples/ping-pong-egld $VM_REPO_PATH/test/ping-pong-egld
@@ -79,6 +81,6 @@ build_and_copy ./contracts/feature-tests/composability/proxy-test-second     $VM
 build_and_copy ./contracts/feature-tests/composability/recursive-caller      $VM_REPO_PATH/test/features/composability/recursive-caller
 build_and_copy ./contracts/feature-tests/composability/vault                 $VM_REPO_PATH/test/features/composability/vault
 
-rm -f $VM_REPO_PATH/test/features/composability/scenarios/*
+#rm -f $VM_REPO_PATH/test/features/composability/scenarios/*
 cp -R contracts/feature-tests/composability/scenarios \
    $VM_REPO_PATH/test/features/composability
