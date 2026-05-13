@@ -2,17 +2,19 @@ use multiversx_sc_scenario::imports::*;
 
 use scenario_tester::scenario_tester_proxy;
 
-const SC_SCENARIO_TESTER_PATH_EXPR: &str = "mxsc:output/scenario-tester.mxsc.json";
-const CODE_PATH: MxscPath = MxscPath::new("output/scenario-tester.mxsc.json");
+const CODE_PATH: MxscPath = MxscPath::new("mxsc:output/scenario-tester.mxsc.json");
 const OWNER_ADDRESS: TestAddress = TestAddress::new("owner");
 const ST_ADDRESS: TestSCAddress = TestSCAddress::new("scenario-tester");
 
 fn world() -> ScenarioWorld {
-    let mut blockchain = ScenarioWorld::new().executor_config(ExecutorConfig::Experimental);
+    let mut blockchain = ScenarioWorld::new()
+        .executor_config(ExecutorConfig::compiled_tests_or(ExecutorConfig::default()));
 
     blockchain.set_current_dir_from_workspace("contracts/feature-tests/scenario-tester");
+    
+    // Pass the MxscPath object directly to register_contract
     blockchain.register_contract(
-        SC_SCENARIO_TESTER_PATH_EXPR,
+        CODE_PATH,
         scenario_tester::ContractBuilder,
     );
     blockchain
@@ -30,7 +32,7 @@ fn st_experimental_multi_return_smoke() {
         .from(OWNER_ADDRESS)
         .typed(scenario_tester_proxy::ScenarioTesterProxy)
         .init(5u32)
-        .code(CODE_PATH)
+        .code(CODE_PATH) // Use the same MxscPath object
         .new_address(ST_ADDRESS)
         .run();
 

@@ -19,6 +19,14 @@
                 "address:signer3": {
                     "nonce": "0",
                     "balance": "1,000,000"
+                },
+                "address:signer4": {
+                    "nonce": "0",
+                    "balance": "1,000,000"
+                },
+                "address:signer5": {
+                    "nonce": "0",
+                    "balance": "1,000,000"
                 }
             },
             "newAddresses": [
@@ -39,11 +47,13 @@
                 "from": "address:owner",
                 "contractCode": "mxsc:../output/drwa-auth-admin.mxsc.json",
                 "arguments": [
-                    "2",
-                    "100",
+                    "3",
+                    "100000",
                     "address:signer1",
                     "address:signer2",
-                    "address:signer3"
+                    "address:signer3",
+                    "address:signer4",
+                    "address:signer5"
                 ],
                 "gasLimit": "80,000,000",
                 "gasPrice": "0"
@@ -78,7 +88,7 @@
         },
         {
             "step": "scCall",
-            "id": "sign-update",
+            "id": "sign-update-signer2",
             "tx": {
                 "from": "address:signer2",
                 "to": "sc:drwa_auth_admin",
@@ -92,6 +102,30 @@
                 "out": [],
                 "gas": "*",
                 "refund": "*"
+            }
+        },
+        {
+            "step": "scCall",
+            "id": "sign-update-signer3",
+            "tx": {
+                "from": "address:signer3",
+                "to": "sc:drwa_auth_admin",
+                "function": "sign",
+                "arguments": ["1"],
+                "gasLimit": "50,000,000",
+                "gasPrice": "0"
+            },
+            "expect": {
+                "status": "0",
+                "out": [],
+                "gas": "*",
+                "refund": "*"
+            }
+        },
+        {
+            "step": "setState",
+            "currentBlockInfo": {
+                "blockRound": "14402"
             }
         },
         {

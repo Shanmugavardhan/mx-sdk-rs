@@ -72,20 +72,6 @@
     ],
     "events": [
         {
-            "identifier": "payable-event",
-            "inputs": [
-                {
-                    "name": "token",
-                    "type": "TokenIdentifier",
-                    "indexed": true
-                },
-                {
-                    "name": "amount",
-                    "type": "BigUint"
-                }
-            ]
-        },
-        {
             "identifier": "address-h256-event",
             "inputs": [
                 {
@@ -97,6 +83,20 @@
                     "name": "h256",
                     "type": "H256",
                     "indexed": true
+                }
+            ]
+        },
+        {
+            "identifier": "payable-event",
+            "inputs": [
+                {
+                    "name": "token",
+                    "type": "TokenIdentifier",
+                    "indexed": true
+                },
+                {
+                    "name": "amount",
+                    "type": "BigUint"
                 }
             ]
         },
@@ -128,7 +128,7 @@
         },
         {
             "ticker": "OnlyInEsdt",
-            "type": "OnlyShowsUpInEsdtAttr"
+            "type": "EsdtAttribute"
         },
         {
             "ticker": "ExplicitDiscriminant",
@@ -179,7 +179,7 @@
                         },
                         {
                             "name": "1",
-                            "type": "OnlyShowsUpAsNested08"
+                            "type": "NestedEnumTuple"
                         }
                     ]
                 },
@@ -193,7 +193,7 @@
                         },
                         {
                             "name": "b",
-                            "type": "OnlyShowsUpAsNested09"
+                            "type": "NestedEnumField"
                         }
                     ]
                 }
@@ -297,7 +297,7 @@
                         "This type should only appear here."
                     ],
                     "name": "nested",
-                    "type": "OnlyShowsUpAsNested01"
+                    "type": "NestedUnit"
                 },
                 {
                     "docs": [
@@ -312,7 +312,7 @@
                         "Also, just like above, recursive types need to work even when nested into a tuple."
                     ],
                     "name": "tuple_madness",
-                    "type": "tuple<OnlyShowsUpAsNested02,Option<AbiTestType>>"
+                    "type": "tuple<NestedEmptyArray,Option<AbiTestType>>"
                 }
             ]
         },
@@ -333,6 +333,51 @@
                 {
                     "name": "flush",
                     "type": "bytes-read-to-end"
+                }
+            ]
+        },
+        "ArrayItem": {
+            "type": "struct",
+            "docs": [
+                "Tests that the ABI generator also fetches types that only appear as fields."
+            ]
+        },
+        "ArrayVecItem": {
+            "type": "struct",
+            "docs": [
+                "Tests that the ABI generator also fetches types that only appear as fields."
+            ]
+        },
+        "BoxItem": {
+            "type": "struct",
+            "docs": [
+                "Tests that the ABI generator also fetches types that only appear as fields."
+            ]
+        },
+        "BoxedSliceItem": {
+            "type": "struct",
+            "docs": [
+                "Tests that the ABI generator also fetches types that only appear as fields."
+            ]
+        },
+        "ConstructorArg": {
+            "type": "struct",
+            "docs": [
+                "Tests that the ABI generator also fetches types that only appear as fields."
+            ],
+            "fields": [
+                {
+                    "name": "something",
+                    "type": "()"
+                }
+            ]
+        },
+        "EsdtAttribute": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "field",
+                    "type": "NestedEsdtAttribute"
                 }
             ]
         },
@@ -541,13 +586,13 @@
                 }
             ]
         },
-        "OnlyShowsUpAsNested01": {
+        "MapperItem": {
             "type": "struct",
             "docs": [
                 "Tests that the ABI generator also fetches types that only appear as fields."
             ]
         },
-        "OnlyShowsUpAsNested02": {
+        "NestedEmptyArray": {
             "type": "struct",
             "docs": [
                 "Tests that the ABI generator also fetches types that only appear as fields."
@@ -559,127 +604,58 @@
                 }
             ]
         },
-        "OnlyShowsUpAsNested03": {
+        "NestedEnumField": {
             "type": "struct",
             "docs": [
                 "Tests that the ABI generator also fetches types that only appear as fields."
             ]
         },
-        "OnlyShowsUpAsNested04": {
+        "NestedEnumTuple": {
             "type": "struct",
             "docs": [
                 "Tests that the ABI generator also fetches types that only appear as fields."
             ]
         },
-        "OnlyShowsUpAsNested05": {
+        "NestedEsdtAttribute": {
             "type": "struct",
             "docs": [
                 "Tests that the ABI generator also fetches types that only appear as fields."
             ]
         },
-        "OnlyShowsUpAsNested06": {
+        "NestedMultiResult": {
             "type": "struct",
             "docs": [
                 "Tests that the ABI generator also fetches types that only appear as fields."
             ]
         },
-        "OnlyShowsUpAsNested07": {
+        "NestedMultiValueVec": {
             "type": "struct",
             "docs": [
                 "Tests that the ABI generator also fetches types that only appear as fields."
             ]
         },
-        "OnlyShowsUpAsNested08": {
+        "NestedOptionalArg": {
             "type": "struct",
             "docs": [
                 "Tests that the ABI generator also fetches types that only appear as fields."
             ]
         },
-        "OnlyShowsUpAsNested09": {
+        "NestedOptionalResult": {
             "type": "struct",
             "docs": [
                 "Tests that the ABI generator also fetches types that only appear as fields."
             ]
         },
-        "OnlyShowsUpAsNested10": {
+        "NestedUnit": {
             "type": "struct",
             "docs": [
                 "Tests that the ABI generator also fetches types that only appear as fields."
             ]
         },
-        "OnlyShowsUpAsNestedInArray": {
+        "NestedVarArgs": {
             "type": "struct",
             "docs": [
                 "Tests that the ABI generator also fetches types that only appear as fields."
-            ]
-        },
-        "OnlyShowsUpAsNestedInArrayVec": {
-            "type": "struct",
-            "docs": [
-                "Tests that the ABI generator also fetches types that only appear as fields."
-            ]
-        },
-        "OnlyShowsUpAsNestedInBox": {
-            "type": "struct",
-            "docs": [
-                "Tests that the ABI generator also fetches types that only appear as fields."
-            ]
-        },
-        "OnlyShowsUpAsNestedInBoxedSlice": {
-            "type": "struct",
-            "docs": [
-                "Tests that the ABI generator also fetches types that only appear as fields."
-            ]
-        },
-        "OnlyShowsUpAsNestedInOption": {
-            "type": "struct",
-            "docs": [
-                "Tests that the ABI generator also fetches types that only appear as fields."
-            ]
-        },
-        "OnlyShowsUpAsNestedInRef": {
-            "type": "struct",
-            "docs": [
-                "Tests that the ABI generator also fetches types that only appear as fields."
-            ]
-        },
-        "OnlyShowsUpAsNestedInSingleValueMapper": {
-            "type": "struct",
-            "docs": [
-                "Tests that the ABI generator also fetches types that only appear as fields."
-            ]
-        },
-        "OnlyShowsUpAsNestedInSlice": {
-            "type": "struct",
-            "docs": [
-                "Tests that the ABI generator also fetches types that only appear as fields."
-            ]
-        },
-        "OnlyShowsUpAsNestedInVec": {
-            "type": "struct",
-            "docs": [
-                "Tests that the ABI generator also fetches types that only appear as fields."
-            ]
-        },
-        "OnlyShowsUpInConstructor": {
-            "type": "struct",
-            "docs": [
-                "Tests that the ABI generator also fetches types that only appear as fields."
-            ],
-            "fields": [
-                {
-                    "name": "something",
-                    "type": "()"
-                }
-            ]
-        },
-        "OnlyShowsUpInEsdtAttr": {
-            "type": "struct",
-            "fields": [
-                {
-                    "name": "field",
-                    "type": "OnlyShowsUpAsNested10"
-                }
             ]
         },
         "OperationCompletionStatus": {
@@ -699,6 +675,12 @@
                 }
             ]
         },
+        "OptionItem": {
+            "type": "struct",
+            "docs": [
+                "Tests that the ABI generator also fetches types that only appear as fields."
+            ]
+        },
         "Permission": {
             "type": "struct",
             "fields": [
@@ -706,6 +688,24 @@
                     "name": "0",
                     "type": "u32"
                 }
+            ]
+        },
+        "RefItem": {
+            "type": "struct",
+            "docs": [
+                "Tests that the ABI generator also fetches types that only appear as fields."
+            ]
+        },
+        "SliceItem": {
+            "type": "struct",
+            "docs": [
+                "Tests that the ABI generator also fetches types that only appear as fields."
+            ]
+        },
+        "VecItem": {
+            "type": "struct",
+            "docs": [
+                "Tests that the ABI generator also fetches types that only appear as fields."
             ]
         }
     }
