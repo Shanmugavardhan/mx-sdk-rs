@@ -3,10 +3,7 @@ use bitflags::bitflags;
 use multiversx_sc::{
     api::ManagedTypeApi,
     typenum::U2,
-    types::{
-        BigUint, Box, ConstDecimals, ManagedAddress, ManagedBuffer, ManagedBufferReadToEnd,
-        ManagedDecimal, ManagedVec,
-    },
+    types::{BigUint, Box, ConstDecimals, ManagedBuffer, ManagedBufferReadToEnd, ManagedDecimal},
 };
 multiversx_sc::derive_imports!();
 
@@ -15,14 +12,14 @@ multiversx_sc::derive_imports!();
 #[derive(NestedEncode, NestedDecode, TopEncode, TopDecode)]
 pub struct AbiTestType {
     /// This type should only appear here.
-    pub nested: NestedUnit,
+    pub nested: OnlyShowsUpAsNested01,
 
     /// Tests that recursive types will not send the ABI generator into an infinite loop.
     pub next: Option<Box<AbiTestType>>,
 
     /// Tests that tuples tell the ABI of their component types even if they appear nowhere else.
     /// Also, just like above, recursive types need to work even when nested into a tuple.
-    pub tuple_madness: (NestedEmptyArray, Option<Box<AbiTestType>>),
+    pub tuple_madness: (OnlyShowsUpAsNested02, Option<Box<AbiTestType>>),
 }
 
 /// Its only purpose is to test that the ABI generator works fine.
@@ -43,38 +40,10 @@ pub struct AbiManagedVecItem {
 }
 
 #[type_abi]
-#[derive(
-    NestedEncode, NestedDecode, TopEncode, TopDecode, ManagedVecItem, Clone, PartialEq, Eq, Debug,
-)]
-pub struct AbiManagedComplexVecItem<M: ManagedTypeApi> {
-    pub token_id: ManagedBuffer<M>,
-    pub holder: ManagedAddress<M>,
-    pub version: u64,
-    pub body: ManagedBuffer<M>,
-}
-
-#[type_abi]
-#[derive(
-    NestedEncode, NestedDecode, TopEncode, TopDecode, ManagedVecItem, Clone, PartialEq, Eq, Debug,
-)]
-pub enum AbiEnvelopeDomain {
-    Alpha,
-    Beta,
-}
-
-#[type_abi]
-#[derive(NestedEncode, NestedDecode, TopEncode, TopDecode, Clone, PartialEq, Eq, Debug)]
-pub struct AbiEnvelope<M: ManagedTypeApi> {
-    pub domain: AbiEnvelopeDomain,
-    pub payload_hash: ManagedBuffer<M>,
-    pub operations: ManagedVec<M, AbiManagedComplexVecItem<M>>,
-}
-
-#[type_abi]
 #[derive(TopEncode, TopDecode)]
-pub struct EsdtAttribute {
+pub struct OnlyShowsUpInEsdtAttr {
     #[allow(dead_code)]
-    pub field: NestedEsdtAttribute,
+    pub field: OnlyShowsUpAsNested10,
 }
 
 #[type_abi]

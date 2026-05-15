@@ -7,8 +7,8 @@ multiversx_sc::derive_imports!();
 pub enum AbiEnum {
     Nothing,
     Something(i32),
-    SomethingMore(u8, NestedEnumTuple),
-    SomeStruct { a: u16, b: NestedEnumField },
+    SomethingMore(u8, OnlyShowsUpAsNested08),
+    SomeStruct { a: u16, b: OnlyShowsUpAsNested09 },
 }
 
 /// An enum with similar explicit discriminants

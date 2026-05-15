@@ -8,10 +8,6 @@
 #![allow(clippy::all)]
 
 use multiversx_sc::proxy_imports::*;
-use crate::abi_enum::*;
-use crate::abi_test_type::*;
-use crate::only_nested::*;
-
 
 pub struct AbiTesterProxy;
 
@@ -50,7 +46,7 @@ where
     /// Contract constructor. 
     pub fn init<
         Arg0: ProxyArg<i32>,
-        Arg1: ProxyArg<ConstructorArg>,
+        Arg1: ProxyArg<OnlyShowsUpInConstructor>,
     >(
         self,
         _constructor_arg_1: Arg0,
@@ -76,7 +72,7 @@ where
     /// Upgrade constructor. 
     pub fn upgrade<
         Arg0: ProxyArg<i32>,
-        Arg1: ProxyArg<ConstructorArg>,
+        Arg1: ProxyArg<OnlyShowsUpInConstructor>,
     >(
         self,
         _constructor_arg_1: Arg0,
@@ -151,7 +147,7 @@ where
 
     pub fn multi_result_4(
         self,
-    ) -> TxTypedCall<Env, From, To, NotPayable, Gas, MultiValue4<i32, [u8; 3], BoxedBytes, NestedMultiResult>> {
+    ) -> TxTypedCall<Env, From, To, NotPayable, Gas, MultiValue4<i32, [u8; 3], BoxedBytes, OnlyShowsUpAsNested03>> {
         self.wrapped_tx
             .payment(NotPayable)
             .raw_call("multi_result_4")
@@ -160,7 +156,7 @@ where
 
     pub fn var_args<
         Arg0: ProxyArg<u32>,
-        Arg1: ProxyArg<MultiValueVec<MultiValue2<NestedVarArgs, i32>>>,
+        Arg1: ProxyArg<MultiValueVec<MultiValue2<OnlyShowsUpAsNested04, i32>>>,
     >(
         self,
         _simple_arg: Arg0,
@@ -176,7 +172,7 @@ where
 
     pub fn multi_result_vec(
         self,
-    ) -> TxTypedCall<Env, From, To, NotPayable, Gas, MultiValueVec<MultiValue3<NestedMultiValueVec, bool, ()>>> {
+    ) -> TxTypedCall<Env, From, To, NotPayable, Gas, MultiValueVec<MultiValue3<OnlyShowsUpAsNested05, bool, ()>>> {
         self.wrapped_tx
             .payment(NotPayable)
             .raw_call("multi_result_vec")
@@ -185,7 +181,7 @@ where
 
     pub fn optional_arg<
         Arg0: ProxyArg<u32>,
-        Arg1: ProxyArg<OptionalValue<NestedOptionalArg>>,
+        Arg1: ProxyArg<OptionalValue<OnlyShowsUpAsNested06>>,
     >(
         self,
         _simple_arg: Arg0,
@@ -201,7 +197,7 @@ where
 
     pub fn optional_result(
         self,
-    ) -> TxTypedCall<Env, From, To, NotPayable, Gas, OptionalValue<NestedOptionalResult>> {
+    ) -> TxTypedCall<Env, From, To, NotPayable, Gas, OptionalValue<OnlyShowsUpAsNested07>> {
         self.wrapped_tx
             .payment(NotPayable)
             .raw_call("optional_result")
@@ -291,7 +287,7 @@ where
 
     pub fn sample_storage_mapper(
         self,
-    ) -> TxTypedCall<Env, From, To, NotPayable, Gas, MapperItem> {
+    ) -> TxTypedCall<Env, From, To, NotPayable, Gas, OnlyShowsUpAsNestedInSingleValueMapper> {
         self.wrapped_tx
             .payment(NotPayable)
             .raw_call("sample_storage_mapper")
@@ -300,7 +296,7 @@ where
 
     pub fn item_for_vec(
         self,
-    ) -> TxTypedCall<Env, From, To, NotPayable, Gas, Vec<VecItem>> {
+    ) -> TxTypedCall<Env, From, To, NotPayable, Gas, Vec<OnlyShowsUpAsNestedInVec>> {
         self.wrapped_tx
             .payment(NotPayable)
             .raw_call("item_for_vec")
@@ -309,7 +305,7 @@ where
 
     pub fn item_for_array_vec(
         self,
-    ) -> TxTypedCall<Env, From, To, NotPayable, Gas, ArrayVec<ArrayVecItem, 3usize>> {
+    ) -> TxTypedCall<Env, From, To, NotPayable, Gas, ArrayVec<OnlyShowsUpAsNestedInArrayVec, 3usize>> {
         self.wrapped_tx
             .payment(NotPayable)
             .raw_call("item_for_array_vec")
@@ -322,62 +318,6 @@ where
         self.wrapped_tx
             .payment(NotPayable)
             .raw_call("item_for_managed_vec")
-            .original_result()
-    }
-
-    pub fn item_for_managed_complex_vec(
-        self,
-    ) -> TxTypedCall<Env, From, To, NotPayable, Gas, ManagedVec<Env::Api, AbiManagedComplexVecItem<Env::Api>>> {
-        self.wrapped_tx
-            .payment(NotPayable)
-            .raw_call("item_for_managed_complex_vec")
-            .original_result()
-    }
-
-    pub fn envelope_like_result(
-        self,
-    ) -> TxTypedCall<Env, From, To, NotPayable, Gas, AbiEnvelope<Env::Api>> {
-        self.wrapped_tx
-            .payment(NotPayable)
-            .raw_call("envelope_like_result")
-            .original_result()
-    }
-
-    pub fn validate_token_id_and_return_envelope<
-        Arg0: ProxyArg<ManagedBuffer<Env::Api>>,
-    >(
-        self,
-        token_id: Arg0,
-    ) -> TxTypedCall<Env, From, To, NotPayable, Gas, AbiEnvelope<Env::Api>> {
-        self.wrapped_tx
-            .payment(NotPayable)
-            .raw_call("validate_token_id_and_return_envelope")
-            .argument(&token_id)
-            .original_result()
-    }
-
-    pub fn validate_constant_token_id_and_return_envelope(
-        self,
-    ) -> TxTypedCall<Env, From, To, NotPayable, Gas, AbiEnvelope<Env::Api>> {
-        self.wrapped_tx
-            .payment(NotPayable)
-            .raw_call("validate_constant_token_id_and_return_envelope")
-            .original_result()
-    }
-
-    pub fn set_token_scoped_value_and_return_envelope<
-        Arg0: ProxyArg<ManagedBuffer<Env::Api>>,
-        Arg1: ProxyArg<ManagedBuffer<Env::Api>>,
-    >(
-        self,
-        token_id: Arg0,
-        value: Arg1,
-    ) -> TxTypedCall<Env, From, To, NotPayable, Gas, AbiEnvelope<Env::Api>> {
-        self.wrapped_tx
-            .payment(NotPayable)
-            .raw_call("set_token_scoped_value_and_return_envelope")
-            .argument(&token_id)
-            .argument(&value)
             .original_result()
     }
 
@@ -395,7 +335,7 @@ where
     }
 
     pub fn item_for_array<
-        Arg0: ProxyArg<[ArrayItem; 5]>,
+        Arg0: ProxyArg<[OnlyShowsUpAsNestedInArray; 5]>,
     >(
         self,
         _array: Arg0,
@@ -409,7 +349,7 @@ where
 
     pub fn item_for_box(
         self,
-    ) -> TxTypedCall<Env, From, To, NotPayable, Gas, Box<BoxItem>> {
+    ) -> TxTypedCall<Env, From, To, NotPayable, Gas, Box<OnlyShowsUpAsNestedInBox>> {
         self.wrapped_tx
             .payment(NotPayable)
             .raw_call("item_for_box")
@@ -418,7 +358,7 @@ where
 
     pub fn item_for_boxed_slice(
         self,
-    ) -> TxTypedCall<Env, From, To, NotPayable, Gas, Box<[BoxedSliceItem]>> {
+    ) -> TxTypedCall<Env, From, To, NotPayable, Gas, Box<[OnlyShowsUpAsNestedInBoxedSlice]>> {
         self.wrapped_tx
             .payment(NotPayable)
             .raw_call("item_for_boxed_slice")
@@ -426,7 +366,7 @@ where
     }
 
     pub fn item_for_ref<
-        Arg0: ProxyArg<RefItem>,
+        Arg0: ProxyArg<OnlyShowsUpAsNestedInRef>,
     >(
         self,
         _ref: Arg0,
@@ -439,7 +379,7 @@ where
     }
 
     pub fn item_for_slice<
-        Arg0: ProxyArg<Box<[SliceItem]>>,
+        Arg0: ProxyArg<Box<[OnlyShowsUpAsNestedInSlice]>>,
     >(
         self,
         _ref: Arg0,
@@ -453,7 +393,7 @@ where
 
     pub fn item_for_option(
         self,
-    ) -> TxTypedCall<Env, From, To, NotPayable, Gas, Option<OptionItem>> {
+    ) -> TxTypedCall<Env, From, To, NotPayable, Gas, Option<OnlyShowsUpAsNestedInOption>> {
         self.wrapped_tx
             .payment(NotPayable)
             .raw_call("item_for_option")
@@ -505,4 +445,182 @@ where
             .raw_call("payable_any_token")
             .original_result()
     }
+}
+
+#[type_abi]
+#[derive(NestedEncode, NestedDecode, TopEncode, TopDecode)]
+pub struct OnlyShowsUpInConstructor {
+    pub something: (),
+}
+
+#[type_abi]
+#[derive(NestedEncode, NestedDecode, TopEncode, TopDecode)]
+pub struct AbiTestType {
+    pub nested: OnlyShowsUpAsNested01,
+    pub next: Option<Box<AbiTestType>>,
+    pub tuple_madness: (OnlyShowsUpAsNested02, Option<Box<AbiTestType>>),
+}
+
+#[type_abi]
+#[derive(NestedEncode, NestedDecode, TopEncode, TopDecode)]
+pub struct OnlyShowsUpAsNested01 {}
+
+#[type_abi]
+#[derive(NestedEncode, NestedDecode, TopEncode, TopDecode)]
+pub struct OnlyShowsUpAsNested02 {
+    pub something: [u8; 0],
+}
+
+#[rustfmt::skip]
+#[type_abi]
+#[derive(NestedEncode, NestedDecode, TopEncode, TopDecode)]
+pub enum AbiEnum {
+    Nothing,
+    Something(i32),
+    SomethingMore(u8, OnlyShowsUpAsNested08),
+    SomeStruct {
+        a: u16,
+        b: OnlyShowsUpAsNested09,
+    },
+}
+
+#[type_abi]
+#[derive(NestedEncode, NestedDecode, TopEncode, TopDecode)]
+pub struct OnlyShowsUpAsNested08 {}
+
+#[type_abi]
+#[derive(NestedEncode, NestedDecode, TopEncode, TopDecode)]
+pub struct OnlyShowsUpAsNested09 {}
+
+#[type_abi]
+#[derive(NestedEncode, NestedDecode, TopEncode, TopDecode)]
+pub struct AbiManagedType<Api>
+where
+    Api: ManagedTypeApi,
+{
+    pub big_uint: BigUint<Api>,
+    pub integer: i32,
+    pub managed_buffer: ManagedBuffer<Api>,
+}
+
+#[type_abi]
+#[derive(NestedEncode, NestedDecode, TopEncode, TopDecode)]
+pub struct OnlyShowsUpAsNested03 {}
+
+#[type_abi]
+#[derive(NestedEncode, NestedDecode, TopEncode, TopDecode)]
+pub struct OnlyShowsUpAsNested04 {}
+
+#[type_abi]
+#[derive(NestedEncode, NestedDecode, TopEncode, TopDecode)]
+pub struct OnlyShowsUpAsNested05 {}
+
+#[type_abi]
+#[derive(NestedEncode, NestedDecode, TopEncode, TopDecode)]
+pub struct OnlyShowsUpAsNested06 {}
+
+#[type_abi]
+#[derive(NestedEncode, NestedDecode, TopEncode, TopDecode)]
+pub struct OnlyShowsUpAsNested07 {}
+
+#[type_abi]
+#[derive(NestedEncode, NestedDecode, TopEncode, TopDecode)]
+pub struct OnlyShowsUpAsNestedInSingleValueMapper {}
+
+#[type_abi]
+#[derive(NestedEncode, NestedDecode, TopEncode, TopDecode)]
+pub struct OnlyShowsUpAsNestedInVec {}
+
+#[type_abi]
+#[derive(NestedEncode, NestedDecode, TopEncode, TopDecode)]
+pub struct OnlyShowsUpAsNestedInArrayVec {}
+
+#[type_abi]
+#[derive(NestedEncode, NestedDecode, TopEncode, TopDecode, ManagedVecItem)]
+pub struct AbiManagedVecItem {
+    pub value1: u32,
+    pub value2: u32,
+}
+
+#[type_abi]
+#[derive(Clone, Copy, Debug, PartialEq, Eq, NestedDecode, NestedEncode, TopEncode, TopDecode)]
+pub struct Permission(u32);
+
+#[type_abi]
+#[derive(NestedEncode, NestedDecode, TopEncode, TopDecode)]
+pub struct OnlyShowsUpAsNestedInArray {}
+
+#[type_abi]
+#[derive(NestedEncode, NestedDecode, TopEncode, TopDecode)]
+pub struct OnlyShowsUpAsNestedInBox {}
+
+#[type_abi]
+#[derive(NestedEncode, NestedDecode, TopEncode, TopDecode)]
+pub struct OnlyShowsUpAsNestedInBoxedSlice {}
+
+#[type_abi]
+#[derive(NestedEncode, NestedDecode, TopEncode, TopDecode)]
+pub struct OnlyShowsUpAsNestedInRef {}
+
+#[type_abi]
+#[derive(NestedEncode, NestedDecode, TopEncode, TopDecode)]
+pub struct OnlyShowsUpAsNestedInSlice {}
+
+#[type_abi]
+#[derive(NestedEncode, NestedDecode, TopEncode, TopDecode)]
+pub struct OnlyShowsUpAsNestedInOption {}
+
+#[type_abi]
+#[derive(NestedEncode, NestedDecode, TopEncode, TopDecode)]
+pub struct AbiWithManagedBufferReadToEnd<Api>
+where
+    Api: ManagedTypeApi,
+{
+    pub endpoint: ManagedBuffer<Api>,
+    pub gas: u64,
+    pub flush: ManagedBufferReadToEnd<Api>,
+}
+
+#[type_abi]
+#[derive(TopEncode, TopDecode)]
+pub struct OnlyShowsUpInEsdtAttr {
+    pub field: OnlyShowsUpAsNested10,
+}
+
+#[type_abi]
+#[derive(NestedEncode, NestedDecode, TopEncode, TopDecode)]
+pub struct OnlyShowsUpAsNested10 {}
+
+#[type_abi]
+#[derive(NestedEncode, NestedDecode, TopEncode, TopDecode)]
+pub enum ExplicitDiscriminant {
+    Zero,
+    Thirty = 30,
+    Twelve = 12,
+    Fifty = 50,
+    FiftyOne,
+}
+
+#[rustfmt::skip]
+#[repr(u8)]
+#[type_abi]
+#[derive(NestedEncode, NestedDecode, TopEncode, TopDecode)]
+pub enum ExplicitDiscriminantMixed {
+    Zero,
+    Unit = 3,
+    Tuple(u16),
+    Five,
+    Struct {
+        a: u8,
+        b: u16,
+    } = 1,
+}
+
+#[type_abi]
+#[derive(TopEncode, TopDecode)]
+pub struct ManagedDecimalWrapper<Api>
+where
+    Api: ManagedTypeApi,
+{
+    pub field: ManagedDecimal<Api, ConstDecimals<U2>>,
 }

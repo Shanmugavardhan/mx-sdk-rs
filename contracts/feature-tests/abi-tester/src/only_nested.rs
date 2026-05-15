@@ -3,103 +3,103 @@ multiversx_sc::derive_imports!();
 /// Tests that the ABI generator also fetches types that only appear as fields.
 #[type_abi]
 #[derive(NestedEncode, NestedDecode, TopEncode, TopDecode)]
-pub struct ConstructorArg {
+pub struct OnlyShowsUpInConstructor {
     pub something: (),
 }
 
 /// Tests that the ABI generator also fetches types that only appear as fields.
 #[type_abi]
 #[derive(NestedEncode, NestedDecode, TopEncode, TopDecode)]
-pub struct NestedUnit;
+pub struct OnlyShowsUpAsNested01;
 
 /// Tests that the ABI generator also fetches types that only appear as fields.
 #[type_abi]
 #[derive(NestedEncode, NestedDecode, TopEncode, TopDecode)]
-pub struct NestedEmptyArray {
+pub struct OnlyShowsUpAsNested02 {
     pub something: [u8; 0],
 }
 
 /// Tests that the ABI generator also fetches types that only appear as fields.
 #[type_abi]
 #[derive(NestedEncode, NestedDecode, TopEncode, TopDecode)]
-pub struct NestedMultiResult();
+pub struct OnlyShowsUpAsNested03();
 
 /// Tests that the ABI generator also fetches types that only appear as fields.
 #[type_abi]
 #[derive(NestedEncode, NestedDecode, TopEncode, TopDecode)]
-pub struct NestedVarArgs;
+pub struct OnlyShowsUpAsNested04;
 
 /// Tests that the ABI generator also fetches types that only appear as fields.
 #[type_abi]
 #[derive(NestedEncode, NestedDecode, TopEncode, TopDecode)]
-pub struct NestedMultiValueVec;
+pub struct OnlyShowsUpAsNested05;
 
 /// Tests that the ABI generator also fetches types that only appear as fields.
 #[type_abi]
 #[derive(NestedEncode, NestedDecode, TopEncode, TopDecode)]
-pub struct NestedOptionalArg;
+pub struct OnlyShowsUpAsNested06;
 
 /// Tests that the ABI generator also fetches types that only appear as fields.
 #[type_abi]
 #[derive(NestedEncode, NestedDecode, TopEncode, TopDecode)]
-pub struct NestedOptionalResult;
+pub struct OnlyShowsUpAsNested07;
 
 /// Tests that the ABI generator also fetches types that only appear as fields.
 #[type_abi]
 #[derive(NestedEncode, NestedDecode, TopEncode, TopDecode)]
-pub struct NestedEnumTuple;
+pub struct OnlyShowsUpAsNested08;
 
 /// Tests that the ABI generator also fetches types that only appear as fields.
 #[type_abi]
 #[derive(NestedEncode, NestedDecode, TopEncode, TopDecode)]
-pub struct NestedEnumField;
+pub struct OnlyShowsUpAsNested09;
 
 /// Tests that the ABI generator also fetches types that only appear as fields.
 #[type_abi]
 #[derive(NestedEncode, NestedDecode, TopEncode, TopDecode)]
-pub struct NestedEsdtAttribute;
+pub struct OnlyShowsUpAsNested10;
 
 /// Tests that the ABI generator also fetches types that only appear as fields.
 #[type_abi]
 #[derive(NestedEncode, NestedDecode, TopEncode, TopDecode)]
-pub struct MapperItem;
+pub struct OnlyShowsUpAsNestedInSingleValueMapper;
 
 /// Tests that the ABI generator also fetches types that only appear as fields.
 #[type_abi]
 #[derive(NestedEncode, NestedDecode, TopEncode, TopDecode)]
-pub struct VecItem;
+pub struct OnlyShowsUpAsNestedInVec;
 
 /// Tests that the ABI generator also fetches types that only appear as fields.
 #[type_abi]
 #[derive(NestedEncode, NestedDecode, TopEncode, TopDecode)]
-pub struct ArrayVecItem;
+pub struct OnlyShowsUpAsNestedInArrayVec;
 
 /// Tests that the ABI generator also fetches types that only appear as fields.
 #[type_abi]
 #[derive(NestedEncode, NestedDecode, TopEncode, TopDecode)]
-pub struct ArrayItem;
+pub struct OnlyShowsUpAsNestedInArray;
 
 /// Tests that the ABI generator also fetches types that only appear as fields.
 #[type_abi]
 #[derive(NestedEncode, NestedDecode, TopEncode, TopDecode)]
-pub struct BoxItem;
+pub struct OnlyShowsUpAsNestedInBox;
 
 /// Tests that the ABI generator also fetches types that only appear as fields.
 #[type_abi]
 #[derive(NestedEncode, NestedDecode, TopEncode, TopDecode)]
-pub struct BoxedSliceItem;
+pub struct OnlyShowsUpAsNestedInBoxedSlice;
 
 /// Tests that the ABI generator also fetches types that only appear as fields.
 #[type_abi]
 #[derive(NestedEncode, NestedDecode, TopEncode, TopDecode)]
-pub struct RefItem;
+pub struct OnlyShowsUpAsNestedInRef;
 
 /// Tests that the ABI generator also fetches types that only appear as fields.
 #[type_abi]
 #[derive(NestedEncode, NestedDecode, TopEncode, TopDecode)]
-pub struct SliceItem;
+pub struct OnlyShowsUpAsNestedInSlice;
 
 /// Tests that the ABI generator also fetches types that only appear as fields.
 #[type_abi]
 #[derive(NestedEncode, NestedDecode, TopEncode, TopDecode)]
-pub struct OptionItem;
+pub struct OnlyShowsUpAsNestedInOption;

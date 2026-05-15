@@ -16,7 +16,7 @@
         },
         "framework": {
             "name": "multiversx-sc",
-            "version": "0.65.0"
+            "version": "0.65.1"
         }
     },
     "docs": [
@@ -41,7 +41,7 @@
             },
             {
                 "name": "_constructor_arg_2",
-                "type": "ConstructorArg"
+                "type": "OnlyShowsUpInConstructor"
             }
         ],
         "outputs": []
@@ -57,7 +57,7 @@
             },
             {
                 "name": "_constructor_arg_2",
-                "type": "ConstructorArg"
+                "type": "OnlyShowsUpInConstructor"
             }
         ],
         "outputs": []
@@ -109,6 +109,101 @@
                 }
             ],
             "outputs": []
+        },
+        {
+            "name": "multi_result_3",
+            "title": "result-3",
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": [
+                {
+                    "name": "multi-result-1",
+                    "type": "i32"
+                },
+                {
+                    "name": "multi-result-2",
+                    "type": "array3<u8>"
+                },
+                {
+                    "name": "multi-result-3",
+                    "type": "bytes"
+                }
+            ]
+        },
+        {
+            "name": "multi_result_4",
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": [
+                {
+                    "name": "multi-too-few-1",
+                    "type": "i32"
+                },
+                {
+                    "name": "multi-too-few-2",
+                    "type": "array3<u8>"
+                },
+                {
+                    "type": "bytes"
+                },
+                {
+                    "type": "OnlyShowsUpAsNested03"
+                }
+            ]
+        },
+        {
+            "name": "var_args",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "_simple_arg",
+                    "type": "u32"
+                },
+                {
+                    "name": "_var_args",
+                    "type": "variadic<multi<OnlyShowsUpAsNested04,i32>>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "multi_result_vec",
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "variadic<multi<OnlyShowsUpAsNested05,bool,()>>",
+                    "multi_result": true
+                }
+            ]
+        },
+        {
+            "name": "optional_arg",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "_simple_arg",
+                    "type": "u32"
+                },
+                {
+                    "name": "_opt_args",
+                    "type": "optional<OnlyShowsUpAsNested06>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "optional_result",
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "optional<OnlyShowsUpAsNested07>",
+                    "multi_result": true
+                }
+            ]
         },
         {
             "name": "address_vs_h256",
@@ -170,229 +265,6 @@
             ]
         },
         {
-            "name": "echo_permission",
-            "mutability": "readonly",
-            "inputs": [
-                {
-                    "name": "p",
-                    "type": "Permission"
-                }
-            ],
-            "outputs": [
-                {
-                    "type": "Permission"
-                }
-            ]
-        },
-        {
-            "name": "multi_result_3",
-            "title": "result-3",
-            "mutability": "mutable",
-            "inputs": [],
-            "outputs": [
-                {
-                    "name": "multi-result-1",
-                    "type": "i32"
-                },
-                {
-                    "name": "multi-result-2",
-                    "type": "array3<u8>"
-                },
-                {
-                    "name": "multi-result-3",
-                    "type": "bytes"
-                }
-            ]
-        },
-        {
-            "name": "multi_result_4",
-            "mutability": "mutable",
-            "inputs": [],
-            "outputs": [
-                {
-                    "name": "multi-too-few-1",
-                    "type": "i32"
-                },
-                {
-                    "name": "multi-too-few-2",
-                    "type": "array3<u8>"
-                },
-                {
-                    "type": "bytes"
-                },
-                {
-                    "type": "NestedMultiResult"
-                }
-            ]
-        },
-        {
-            "name": "var_args",
-            "mutability": "mutable",
-            "inputs": [
-                {
-                    "name": "_simple_arg",
-                    "type": "u32"
-                },
-                {
-                    "name": "_var_args",
-                    "type": "variadic<multi<NestedVarArgs,i32>>",
-                    "multi_arg": true
-                }
-            ],
-            "outputs": []
-        },
-        {
-            "name": "multi_result_vec",
-            "mutability": "mutable",
-            "inputs": [],
-            "outputs": [
-                {
-                    "type": "variadic<multi<NestedMultiValueVec,bool,()>>",
-                    "multi_result": true
-                }
-            ]
-        },
-        {
-            "name": "optional_arg",
-            "mutability": "mutable",
-            "inputs": [
-                {
-                    "name": "_simple_arg",
-                    "type": "u32"
-                },
-                {
-                    "name": "_opt_args",
-                    "type": "optional<NestedOptionalArg>",
-                    "multi_arg": true
-                }
-            ],
-            "outputs": []
-        },
-        {
-            "name": "optional_result",
-            "mutability": "mutable",
-            "inputs": [],
-            "outputs": [
-                {
-                    "type": "optional<NestedOptionalResult>",
-                    "multi_result": true
-                }
-            ]
-        },
-        {
-            "name": "sample_storage_mapper",
-            "mutability": "readonly",
-            "inputs": [],
-            "outputs": [
-                {
-                    "type": "MapperItem"
-                }
-            ]
-        },
-        {
-            "name": "item_for_vec",
-            "mutability": "readonly",
-            "inputs": [],
-            "outputs": [
-                {
-                    "type": "List<VecItem>"
-                }
-            ]
-        },
-        {
-            "name": "item_for_array_vec",
-            "mutability": "readonly",
-            "inputs": [],
-            "outputs": [
-                {
-                    "type": "List<ArrayVecItem>"
-                }
-            ]
-        },
-        {
-            "name": "item_for_managed_vec",
-            "mutability": "readonly",
-            "inputs": [],
-            "outputs": [
-                {
-                    "type": "List<AbiManagedVecItem>"
-                }
-            ]
-        },
-        {
-            "name": "item_for_managed_complex_vec",
-            "mutability": "readonly",
-            "inputs": [],
-            "outputs": [
-                {
-                    "type": "List<AbiManagedComplexVecItem>"
-                }
-            ]
-        },
-        {
-            "name": "item_for_array",
-            "mutability": "readonly",
-            "inputs": [
-                {
-                    "name": "_array",
-                    "type": "array5<ArrayItem>"
-                }
-            ],
-            "outputs": []
-        },
-        {
-            "name": "item_for_box",
-            "mutability": "readonly",
-            "inputs": [],
-            "outputs": [
-                {
-                    "type": "BoxItem"
-                }
-            ]
-        },
-        {
-            "name": "item_for_boxed_slice",
-            "mutability": "readonly",
-            "inputs": [],
-            "outputs": [
-                {
-                    "type": "List<BoxedSliceItem>"
-                }
-            ]
-        },
-        {
-            "name": "item_for_ref",
-            "mutability": "readonly",
-            "inputs": [
-                {
-                    "name": "_ref",
-                    "type": "RefItem"
-                }
-            ],
-            "outputs": []
-        },
-        {
-            "name": "item_for_slice",
-            "mutability": "readonly",
-            "inputs": [
-                {
-                    "name": "_ref",
-                    "type": "List<SliceItem>"
-                }
-            ],
-            "outputs": []
-        },
-        {
-            "name": "item_for_option",
-            "mutability": "readonly",
-            "inputs": [],
-            "outputs": [
-                {
-                    "type": "Option<OptionItem>"
-                }
-            ]
-        },
-        {
             "name": "esdt_local_role",
             "mutability": "mutable",
             "inputs": [],
@@ -423,87 +295,6 @@
             ]
         },
         {
-            "name": "payable_egld",
-            "mutability": "mutable",
-            "payableInTokens": [
-                "EGLD"
-            ],
-            "inputs": [],
-            "outputs": []
-        },
-        {
-            "name": "payable_some_token",
-            "mutability": "mutable",
-            "payableInTokens": [
-                "TOKEN-FOR-ABI"
-            ],
-            "inputs": [],
-            "outputs": []
-        },
-        {
-            "name": "payable_any_token",
-            "mutability": "mutable",
-            "payableInTokens": [
-                "*"
-            ],
-            "inputs": [],
-            "outputs": []
-        },
-        {
-            "name": "envelope_like_result",
-            "mutability": "readonly",
-            "inputs": [],
-            "outputs": [
-                {
-                    "type": "AbiEnvelope"
-                }
-            ]
-        },
-        {
-            "name": "validate_token_id_and_return_envelope",
-            "mutability": "mutable",
-            "inputs": [
-                {
-                    "name": "token_id",
-                    "type": "bytes"
-                }
-            ],
-            "outputs": [
-                {
-                    "type": "AbiEnvelope"
-                }
-            ]
-        },
-        {
-            "name": "validate_constant_token_id_and_return_envelope",
-            "mutability": "readonly",
-            "inputs": [],
-            "outputs": [
-                {
-                    "type": "AbiEnvelope"
-                }
-            ]
-        },
-        {
-            "name": "set_token_scoped_value_and_return_envelope",
-            "mutability": "mutable",
-            "inputs": [
-                {
-                    "name": "token_id",
-                    "type": "bytes"
-                },
-                {
-                    "name": "value",
-                    "type": "bytes"
-                }
-            ],
-            "outputs": [
-                {
-                    "type": "AbiEnvelope"
-                }
-            ]
-        },
-        {
             "name": "time_types",
             "mutability": "mutable",
             "inputs": [],
@@ -523,6 +314,124 @@
                 {
                     "type": "u64",
                     "specificType": "DurationSeconds"
+                }
+            ]
+        },
+        {
+            "name": "sample_storage_mapper",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "OnlyShowsUpAsNestedInSingleValueMapper"
+                }
+            ]
+        },
+        {
+            "name": "item_for_vec",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "List<OnlyShowsUpAsNestedInVec>"
+                }
+            ]
+        },
+        {
+            "name": "item_for_array_vec",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "List<OnlyShowsUpAsNestedInArrayVec>"
+                }
+            ]
+        },
+        {
+            "name": "item_for_managed_vec",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "List<AbiManagedVecItem>"
+                }
+            ]
+        },
+        {
+            "name": "echo_permission",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "p",
+                    "type": "Permission"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "Permission"
+                }
+            ]
+        },
+        {
+            "name": "item_for_array",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "_array",
+                    "type": "array5<OnlyShowsUpAsNestedInArray>"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "item_for_box",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "OnlyShowsUpAsNestedInBox"
+                }
+            ]
+        },
+        {
+            "name": "item_for_boxed_slice",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "List<OnlyShowsUpAsNestedInBoxedSlice>"
+                }
+            ]
+        },
+        {
+            "name": "item_for_ref",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "_ref",
+                    "type": "OnlyShowsUpAsNestedInRef"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "item_for_slice",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "_ref",
+                    "type": "List<OnlyShowsUpAsNestedInSlice>"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "item_for_option",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "Option<OnlyShowsUpAsNestedInOption>"
                 }
             ]
         },
@@ -550,9 +459,50 @@
                     "type": "bytes"
                 }
             ]
+        },
+        {
+            "name": "payable_egld",
+            "mutability": "mutable",
+            "payableInTokens": [
+                "EGLD"
+            ],
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "payable_some_token",
+            "mutability": "mutable",
+            "payableInTokens": [
+                "TOKEN-FOR-ABI"
+            ],
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "payable_any_token",
+            "mutability": "mutable",
+            "payableInTokens": [
+                "*"
+            ],
+            "inputs": [],
+            "outputs": []
         }
     ],
     "events": [
+        {
+            "identifier": "payable-event",
+            "inputs": [
+                {
+                    "name": "token",
+                    "type": "TokenIdentifier",
+                    "indexed": true
+                },
+                {
+                    "name": "amount",
+                    "type": "BigUint"
+                }
+            ]
+        },
         {
             "identifier": "address-h256-event",
             "inputs": [
@@ -565,20 +515,6 @@
                     "name": "h256",
                     "type": "H256",
                     "indexed": true
-                }
-            ]
-        },
-        {
-            "identifier": "payable-event",
-            "inputs": [
-                {
-                    "name": "token",
-                    "type": "TokenIdentifier",
-                    "indexed": true
-                },
-                {
-                    "name": "amount",
-                    "type": "BigUint"
                 }
             ]
         },
@@ -610,7 +546,7 @@
         },
         {
             "ticker": "OnlyInEsdt",
-            "type": "EsdtAttribute"
+            "type": "OnlyShowsUpInEsdtAttr"
         },
         {
             "ticker": "ExplicitDiscriminant",
@@ -661,7 +597,7 @@
                         },
                         {
                             "name": "1",
-                            "type": "NestedEnumTuple"
+                            "type": "OnlyShowsUpAsNested08"
                         }
                     ]
                 },
@@ -675,60 +611,9 @@
                         },
                         {
                             "name": "b",
-                            "type": "NestedEnumField"
+                            "type": "OnlyShowsUpAsNested09"
                         }
                     ]
-                }
-            ]
-        },
-        "AbiEnvelope": {
-            "type": "struct",
-            "fields": [
-                {
-                    "name": "domain",
-                    "type": "AbiEnvelopeDomain"
-                },
-                {
-                    "name": "payload_hash",
-                    "type": "bytes"
-                },
-                {
-                    "name": "operations",
-                    "type": "List<AbiManagedComplexVecItem>"
-                }
-            ]
-        },
-        "AbiEnvelopeDomain": {
-            "type": "enum",
-            "variants": [
-                {
-                    "name": "Alpha",
-                    "discriminant": 0
-                },
-                {
-                    "name": "Beta",
-                    "discriminant": 1
-                }
-            ]
-        },
-        "AbiManagedComplexVecItem": {
-            "type": "struct",
-            "fields": [
-                {
-                    "name": "token_id",
-                    "type": "bytes"
-                },
-                {
-                    "name": "holder",
-                    "type": "Address"
-                },
-                {
-                    "name": "version",
-                    "type": "u64"
-                },
-                {
-                    "name": "body",
-                    "type": "bytes"
                 }
             ]
         },
@@ -779,7 +664,7 @@
                         "This type should only appear here."
                     ],
                     "name": "nested",
-                    "type": "NestedUnit"
+                    "type": "OnlyShowsUpAsNested01"
                 },
                 {
                     "docs": [
@@ -794,7 +679,7 @@
                         "Also, just like above, recursive types need to work even when nested into a tuple."
                     ],
                     "name": "tuple_madness",
-                    "type": "tuple<NestedEmptyArray,Option<AbiTestType>>"
+                    "type": "tuple<OnlyShowsUpAsNested02,Option<AbiTestType>>"
                 }
             ]
         },
@@ -815,51 +700,6 @@
                 {
                     "name": "flush",
                     "type": "bytes-read-to-end"
-                }
-            ]
-        },
-        "ArrayItem": {
-            "type": "struct",
-            "docs": [
-                "Tests that the ABI generator also fetches types that only appear as fields."
-            ]
-        },
-        "ArrayVecItem": {
-            "type": "struct",
-            "docs": [
-                "Tests that the ABI generator also fetches types that only appear as fields."
-            ]
-        },
-        "BoxItem": {
-            "type": "struct",
-            "docs": [
-                "Tests that the ABI generator also fetches types that only appear as fields."
-            ]
-        },
-        "BoxedSliceItem": {
-            "type": "struct",
-            "docs": [
-                "Tests that the ABI generator also fetches types that only appear as fields."
-            ]
-        },
-        "ConstructorArg": {
-            "type": "struct",
-            "docs": [
-                "Tests that the ABI generator also fetches types that only appear as fields."
-            ],
-            "fields": [
-                {
-                    "name": "something",
-                    "type": "()"
-                }
-            ]
-        },
-        "EsdtAttribute": {
-            "type": "struct",
-            "fields": [
-                {
-                    "name": "field",
-                    "type": "NestedEsdtAttribute"
                 }
             ]
         },
@@ -1068,13 +908,13 @@
                 }
             ]
         },
-        "MapperItem": {
+        "OnlyShowsUpAsNested01": {
             "type": "struct",
             "docs": [
                 "Tests that the ABI generator also fetches types that only appear as fields."
             ]
         },
-        "NestedEmptyArray": {
+        "OnlyShowsUpAsNested02": {
             "type": "struct",
             "docs": [
                 "Tests that the ABI generator also fetches types that only appear as fields."
@@ -1086,58 +926,127 @@
                 }
             ]
         },
-        "NestedEnumField": {
+        "OnlyShowsUpAsNested03": {
             "type": "struct",
             "docs": [
                 "Tests that the ABI generator also fetches types that only appear as fields."
             ]
         },
-        "NestedEnumTuple": {
+        "OnlyShowsUpAsNested04": {
             "type": "struct",
             "docs": [
                 "Tests that the ABI generator also fetches types that only appear as fields."
             ]
         },
-        "NestedEsdtAttribute": {
+        "OnlyShowsUpAsNested05": {
             "type": "struct",
             "docs": [
                 "Tests that the ABI generator also fetches types that only appear as fields."
             ]
         },
-        "NestedMultiResult": {
+        "OnlyShowsUpAsNested06": {
             "type": "struct",
             "docs": [
                 "Tests that the ABI generator also fetches types that only appear as fields."
             ]
         },
-        "NestedMultiValueVec": {
+        "OnlyShowsUpAsNested07": {
             "type": "struct",
             "docs": [
                 "Tests that the ABI generator also fetches types that only appear as fields."
             ]
         },
-        "NestedOptionalArg": {
+        "OnlyShowsUpAsNested08": {
             "type": "struct",
             "docs": [
                 "Tests that the ABI generator also fetches types that only appear as fields."
             ]
         },
-        "NestedOptionalResult": {
+        "OnlyShowsUpAsNested09": {
             "type": "struct",
             "docs": [
                 "Tests that the ABI generator also fetches types that only appear as fields."
             ]
         },
-        "NestedUnit": {
+        "OnlyShowsUpAsNested10": {
             "type": "struct",
             "docs": [
                 "Tests that the ABI generator also fetches types that only appear as fields."
             ]
         },
-        "NestedVarArgs": {
+        "OnlyShowsUpAsNestedInArray": {
             "type": "struct",
             "docs": [
                 "Tests that the ABI generator also fetches types that only appear as fields."
+            ]
+        },
+        "OnlyShowsUpAsNestedInArrayVec": {
+            "type": "struct",
+            "docs": [
+                "Tests that the ABI generator also fetches types that only appear as fields."
+            ]
+        },
+        "OnlyShowsUpAsNestedInBox": {
+            "type": "struct",
+            "docs": [
+                "Tests that the ABI generator also fetches types that only appear as fields."
+            ]
+        },
+        "OnlyShowsUpAsNestedInBoxedSlice": {
+            "type": "struct",
+            "docs": [
+                "Tests that the ABI generator also fetches types that only appear as fields."
+            ]
+        },
+        "OnlyShowsUpAsNestedInOption": {
+            "type": "struct",
+            "docs": [
+                "Tests that the ABI generator also fetches types that only appear as fields."
+            ]
+        },
+        "OnlyShowsUpAsNestedInRef": {
+            "type": "struct",
+            "docs": [
+                "Tests that the ABI generator also fetches types that only appear as fields."
+            ]
+        },
+        "OnlyShowsUpAsNestedInSingleValueMapper": {
+            "type": "struct",
+            "docs": [
+                "Tests that the ABI generator also fetches types that only appear as fields."
+            ]
+        },
+        "OnlyShowsUpAsNestedInSlice": {
+            "type": "struct",
+            "docs": [
+                "Tests that the ABI generator also fetches types that only appear as fields."
+            ]
+        },
+        "OnlyShowsUpAsNestedInVec": {
+            "type": "struct",
+            "docs": [
+                "Tests that the ABI generator also fetches types that only appear as fields."
+            ]
+        },
+        "OnlyShowsUpInConstructor": {
+            "type": "struct",
+            "docs": [
+                "Tests that the ABI generator also fetches types that only appear as fields."
+            ],
+            "fields": [
+                {
+                    "name": "something",
+                    "type": "()"
+                }
+            ]
+        },
+        "OnlyShowsUpInEsdtAttr": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "field",
+                    "type": "OnlyShowsUpAsNested10"
+                }
             ]
         },
         "OperationCompletionStatus": {
@@ -1157,12 +1066,6 @@
                 }
             ]
         },
-        "OptionItem": {
-            "type": "struct",
-            "docs": [
-                "Tests that the ABI generator also fetches types that only appear as fields."
-            ]
-        },
         "Permission": {
             "type": "struct",
             "fields": [
@@ -1170,24 +1073,6 @@
                     "name": "0",
                     "type": "u32"
                 }
-            ]
-        },
-        "RefItem": {
-            "type": "struct",
-            "docs": [
-                "Tests that the ABI generator also fetches types that only appear as fields."
-            ]
-        },
-        "SliceItem": {
-            "type": "struct",
-            "docs": [
-                "Tests that the ABI generator also fetches types that only appear as fields."
-            ]
-        },
-        "VecItem": {
-            "type": "struct",
-            "docs": [
-                "Tests that the ABI generator also fetches types that only appear as fields."
             ]
         }
     }
