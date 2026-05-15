@@ -1,6 +1,10 @@
 [workspace]
 resolver = "3"
 
+exclude = [
+  "contracts/drwa/interactor",
+]
+
 members = [
   "data/codec",
   "data/codec-derive",

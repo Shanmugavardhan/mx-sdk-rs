@@ -156,7 +156,8 @@ pub trait MrvGovernance {
                     .blockchain()
                     .get_block_timestamp_seconds()
                     .as_u64_seconds()
-                    .saturating_add(self.timelock_seconds().get()),
+                    .checked_add(self.timelock_seconds().get())
+                    .unwrap_or_else(|| sc_panic!("proposal eta overflow")),
                 executed: false,
                 executed_at_timestamp: 0u64,
             },
@@ -187,7 +188,8 @@ pub trait MrvGovernance {
                     .blockchain()
                     .get_block_timestamp_seconds()
                     .as_u64_seconds()
-                    .saturating_add(self.timelock_seconds().get()),
+                    .checked_add(self.timelock_seconds().get())
+                    .unwrap_or_else(|| sc_panic!("proposal eta overflow")),
                 executed: false,
                 executed_at_timestamp: 0u64,
             },
@@ -223,7 +225,8 @@ pub trait MrvGovernance {
                     .blockchain()
                     .get_block_timestamp_seconds()
                     .as_u64_seconds()
-                    .saturating_add(self.timelock_seconds().get()),
+                    .checked_add(self.timelock_seconds().get())
+                    .unwrap_or_else(|| sc_panic!("proposal eta overflow")),
                 executed: false,
                 executed_at_timestamp: 0u64,
             },
@@ -258,7 +261,8 @@ pub trait MrvGovernance {
                     .blockchain()
                     .get_block_timestamp_seconds()
                     .as_u64_seconds()
-                    .saturating_add(self.timelock_seconds().get()),
+                    .checked_add(self.timelock_seconds().get())
+                    .unwrap_or_else(|| sc_panic!("proposal eta overflow")),
                 executed: false,
                 executed_at_timestamp: 0u64,
             },
@@ -286,7 +290,8 @@ pub trait MrvGovernance {
                 .blockchain()
                 .get_block_timestamp_seconds()
                 .as_u64_seconds()
-                .saturating_add(self.timelock_seconds().get()),
+                .checked_add(self.timelock_seconds().get())
+                .unwrap_or_else(|| sc_panic!("proposal eta overflow")),
             executed: false,
             executed_at_timestamp: 0u64,
         };
@@ -323,7 +328,8 @@ pub trait MrvGovernance {
                 .blockchain()
                 .get_block_timestamp_seconds()
                 .as_u64_seconds()
-                .saturating_add(self.timelock_seconds().get()),
+                .checked_add(self.timelock_seconds().get())
+                .unwrap_or_else(|| sc_panic!("proposal eta overflow")),
             executed: false,
             executed_at_timestamp: 0u64,
         };
@@ -359,7 +365,8 @@ pub trait MrvGovernance {
                 .blockchain()
                 .get_block_timestamp_seconds()
                 .as_u64_seconds()
-                .saturating_add(self.timelock_seconds().get()),
+                .checked_add(self.timelock_seconds().get())
+                .unwrap_or_else(|| sc_panic!("proposal eta overflow")),
             executed: false,
             executed_at_timestamp: 0u64,
         };
@@ -426,7 +433,10 @@ pub trait MrvGovernance {
             self.blockchain()
                 .get_block_timestamp_seconds()
                 .as_u64_seconds()
-                <= proposal.eta.saturating_add(2_592_000u64),
+                <= proposal
+                    .eta
+                    .checked_add(2_592_000u64)
+                    .unwrap_or_else(|| sc_panic!("proposal expiry window overflow")),
             "PROPOSAL_EXPIRED: must be executed within 30 days of timelock expiry"
         );
 
@@ -634,13 +644,26 @@ pub trait MrvGovernance {
         require!(!jurisdiction.is_empty(), "empty jurisdiction");
 
         let proposal_id = self.next_gsoc_verifier_proposal_id().get();
-        self.next_gsoc_verifier_proposal_id().set(proposal_id + 1);
+        // checked_add: the project policy disallows plain `+ 1` on
+        // monotonic counters. The u64 ceiling is unreachable in
+        // practice but the explicit panic surfaces the impossible
+        // case rather than silently overflowing.
+        let next_proposal_id = proposal_id
+            .checked_add(1)
+            .unwrap_or_else(|| sc_panic!("gsoc verifier proposal_id overflow"));
+        self.next_gsoc_verifier_proposal_id().set(next_proposal_id);
 
+        // checked_add over saturating_add for the eta: saturation
+        // would clamp the timelock to u64::MAX which is functionally
+        // "execute never". Explicit panic on the unreachable
+        // overflow keeps the behaviour deterministic and matches the
+        // project's standing arithmetic policy.
         let eta = self
             .blockchain()
             .get_block_timestamp_seconds()
             .as_u64_seconds()
-            .saturating_add(self.timelock_seconds().get());
+            .checked_add(self.timelock_seconds().get())
+            .unwrap_or_else(|| sc_panic!("gsoc verifier eta overflow"));
 
         self.gsoc_verifier_proposals().insert(
             proposal_id,
@@ -701,7 +724,11 @@ pub trait MrvGovernance {
         // GSOC verifier proposals expire after 30 days, matching the
         // main governance proposal expiry window.
         require!(
-            current_ts <= proposal.eta.saturating_add(2_592_000u64),
+            current_ts
+                <= proposal
+                    .eta
+                    .checked_add(2_592_000u64)
+                    .unwrap_or_else(|| sc_panic!("proposal expiry window overflow")),
             "GSOC_PROPOSAL_EXPIRED: must be executed within 30 days of timelock expiry"
         );
 
@@ -763,7 +790,8 @@ pub trait MrvGovernance {
                     .blockchain()
                     .get_block_timestamp_seconds()
                     .as_u64_seconds()
-                    .saturating_add(self.timelock_seconds().get()),
+                    .checked_add(self.timelock_seconds().get())
+                    .unwrap_or_else(|| sc_panic!("proposal eta overflow")),
                 executed: false,
                 executed_at_timestamp: 0u64,
             },
@@ -878,10 +906,9 @@ pub trait MrvGovernance {
     }
 
     fn decode_u64_payload(&self, payload: &ManagedBuffer) -> u64 {
-        let raw = payload.to_boxed_bytes();
-        require!(raw.as_slice().len() == 8, "invalid numeric payload");
+        require!(payload.len() == 8, "invalid numeric payload");
         let mut bytes = [0u8; 8];
-        bytes.copy_from_slice(raw.as_slice());
+        payload.load_slice(0, &mut bytes);
         u64::from_be_bytes(bytes)
     }
 

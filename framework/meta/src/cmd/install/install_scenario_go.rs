@@ -17,7 +17,7 @@ const MAX_RETRIES: u64 = 5;
 const RETRY_DELAY: time::Duration = time::Duration::from_secs(2);
 const USER_AGENT: &str = "multiversx-sc-meta";
 const SCENARIO_CLI_RELEASES_BASE_URL: &str =
-    "https://api.github.com/repos/Shanmugavardhan/mx-chain-scenario-cli-go/releases";
+    "https://api.github.com/repos/multiversx/mx-chain-scenario-cli-go/releases";
 const CARGO_HOME: &str = env!("CARGO_HOME");
 
 #[derive(Clone, Debug)]
